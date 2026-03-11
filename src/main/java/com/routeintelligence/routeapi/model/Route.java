@@ -1,17 +1,16 @@
 package com.routeintelligence.routeapi.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+
 import java.time.LocalDateTime;
 import java.util.List;
 
-
 /**
  * Entity representing a route created by a user.
- * <p>
- * A route is a collection of locations that represent
- * a path or itinerary created by the user.
+ * A route is composed of multiple locations that define an itinerary or path.
  */
 @Entity
 @Table(name = "routes")
@@ -28,7 +27,6 @@ public class Route {
 
     /**
      * Name of the route.
-     * Example: "Madrid Tapas Walk"
      */
     @Column(nullable = false)
     private String name;
@@ -45,13 +43,29 @@ public class Route {
 
     /**
      * Relationship with User.
-     *
-     * Many routes can belong to one user.
+     * Many routes belong to one user.
      */
-    @ManyToOne // Muchas rutas --> un usuario
-    @JoinColumn(name = "user_id") // Crea la columna "user_id" en la tabla routes
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
     private User user;
 
+    /**
+     * Locations belonging to this route.
+     */
     @OneToMany(mappedBy = "route", cascade = CascadeType.ALL)
+    @JsonManagedReference
     private List<Location> locations;
+
+    /**
+     * Default constructor required by JPA.
+     */
+    public Route() {}
+
+    /**
+     * Automatically set creation timestamp.
+     */
+    @PrePersist
+    public void prePersist() {
+        createdAt = LocalDateTime.now();
+    }
 }

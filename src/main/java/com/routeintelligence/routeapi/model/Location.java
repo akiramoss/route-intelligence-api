@@ -1,14 +1,12 @@
 package com.routeintelligence.routeapi.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
 /**
- * Entity representing a location within a route.
- *
- * A location corresponds to a specific geographic point
- * belonging to a route.
+ * Entity representing a geographic location within a route.
  */
 @Entity
 @Table(name = "locations")
@@ -25,33 +23,34 @@ public class Location {
 
     /**
      * Name of the location.
-     * Example: "Plaza Mayor"
      */
     private String name;
 
     /**
-     * Latitude coordinate of the location.
+     * Latitude coordinate.
      */
     private Double latitude;
 
     /**
-     * Longitude coordinate of the location.
+     * Longitude coordinate.
      */
     private Double longitude;
 
     /**
-     * Position of the location within the route.
-     * Used to maintain order of stops.
+     * Order of the location within the route.
      */
     private Integer orderIndex;
 
     /**
-     * Relationship with Route.
-     *
      * Many locations belong to one route.
      */
-    @ManyToOne // Muchas locations --> una route
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "route_id")
+    @JsonBackReference
     private Route route;
 
+    /**
+     * Default constructor required by JPA.
+     */
+    public Location() {}
 }

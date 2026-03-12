@@ -46,16 +46,16 @@ public class Route {
      * Relationship with User.
      * Many routes belong to one user.
      */
+    @JsonBackReference
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
-    @JsonBackReference
     private User user;
 
     /**
      * Locations belonging to this route.
      */
-    @OneToMany(mappedBy = "route", cascade = CascadeType.ALL)
     @JsonManagedReference
+    @OneToMany(mappedBy = "route", cascade = CascadeType.ALL)
     private List<Location> locations;
 
     /**

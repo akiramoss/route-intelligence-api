@@ -1,6 +1,7 @@
 package com.routeintelligence.routeapi.controller;
 
-import com.routeintelligence.routeapi.model.User;
+import com.routeintelligence.routeapi.dto.UserCreateDTO;
+import com.routeintelligence.routeapi.dto.UserResponseDTO;
 import com.routeintelligence.routeapi.service.UserService;
 import org.springframework.web.bind.annotation.*;
 
@@ -9,36 +10,29 @@ import java.util.List;
 /**
  * REST controller for user-related endpoints.
  */
-@RestController // (maneja requests HTTP)
+@RestController
 @RequestMapping("/users")
 public class UserController {
 
     private final UserService userService;
 
-    /**
-     * Constructor injection of UserService.
-     */
     public UserController(UserService userService) {
         this.userService = userService;
     }
 
     /**
-     * Create a new user.
-     * <p>
-     * POST /users
+     * Create user endpoint
      */
     @PostMapping
-    public User createUser(@RequestBody User user) {
-        return userService.createUser(user);
+    public UserResponseDTO createUser(@RequestBody UserCreateDTO dto) {
+        return userService.createUser(dto);
     }
 
     /**
-     * Retrieve all users.
-     * <p>
-     * GET /users
+     * Get all users
      */
     @GetMapping
-    public List<User> getAllUsers() {
+    public List<UserResponseDTO> getAllUsers() {
         return userService.getAllUsers();
     }
 }

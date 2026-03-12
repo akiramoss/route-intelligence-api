@@ -44,9 +44,9 @@ public class Location {
     /**
      * Many locations belong to one route.
      */
+    @JsonBackReference
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "route_id")
-    @JsonBackReference
     private Route route;
 
     /**

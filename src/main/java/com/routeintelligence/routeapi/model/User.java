@@ -43,8 +43,8 @@ public class User {
      * Relationship with Route.
      * One user can have multiple routes.
      */
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     @JsonManagedReference
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Route> routes;
 
     /**

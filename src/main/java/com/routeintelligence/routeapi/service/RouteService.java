@@ -2,10 +2,13 @@ package com.routeintelligence.routeapi.service;
 
 import com.routeintelligence.routeapi.dto.RouteCreateDTO;
 import com.routeintelligence.routeapi.dto.RouteResponseDTO;
+import com.routeintelligence.routeapi.mapper.RouteMapper;
 import com.routeintelligence.routeapi.model.Route;
 import com.routeintelligence.routeapi.model.User;
 import com.routeintelligence.routeapi.repository.RouteRepository;
 import com.routeintelligence.routeapi.repository.UserRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import com.routeintelligence.routeapi.exception.ResourceNotFoundException;
 
@@ -20,10 +23,12 @@ public class RouteService {
 
     private final RouteRepository routeRepository;
     private final UserRepository userRepository;
+    private final RouteMapper routeMapper;
 
-    public RouteService(RouteRepository routeRepository, UserRepository userRepository) {
+    public RouteService(RouteRepository routeRepository, UserRepository userRepository, RouteMapper routeMapper) {
         this.routeRepository = routeRepository;
         this.userRepository = userRepository;
+        this.routeMapper = routeMapper;
     }
 
     /**
@@ -34,25 +39,20 @@ public class RouteService {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new ResourceNotFoundException("User not found"));
 
-        Route route = new Route();
-        route.setName(dto.getName());
-        route.setDescription(dto.getDescription());
+        Route route = routeMapper.toEntity(dto);
         route.setUser(user);
 
         Route savedRoute = routeRepository.save(route);
 
-        return mapToResponse(savedRoute);
+        return routeMapper.toDTO(savedRoute);
     }
 
     /**
      * Retrieve all routes.
      */
-    public List<RouteResponseDTO> getAllRoutes() {
-
-        return routeRepository.findAll()
-                .stream()
-                .map(this::mapToResponse)
-                .collect(Collectors.toList());
+    public Page<RouteResponseDTO> getRoutes(Pageable pageable) {
+        return routeRepository.findAll(pageable)
+                .map(routeMapper::toDTO);
     }
 
     /**

@@ -4,6 +4,8 @@ import com.routeintelligence.routeapi.dto.RouteCreateDTO;
 import com.routeintelligence.routeapi.dto.RouteResponseDTO;
 import com.routeintelligence.routeapi.service.RouteService;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 
@@ -35,7 +37,7 @@ public class RouteController {
      * Get all routes
      */
     @GetMapping
-    public List<RouteResponseDTO> getAllRoutes() {
-        return routeService.getAllRoutes();
+    public Page<RouteResponseDTO> getRoutes(Pageable pageable) {
+        return routeService.getRoutes(pageable);
     }
 }

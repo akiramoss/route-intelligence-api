@@ -2,6 +2,7 @@ package com.routeintelligence.routeapi.service;
 
 import com.routeintelligence.routeapi.dto.UserCreateDTO;
 import com.routeintelligence.routeapi.dto.UserResponseDTO;
+import com.routeintelligence.routeapi.mapper.UserMapper;
 import com.routeintelligence.routeapi.model.User;
 import com.routeintelligence.routeapi.repository.UserRepository;
 import org.springframework.stereotype.Service;
@@ -16,24 +17,23 @@ import java.util.stream.Collectors;
 public class UserService {
 
     private final UserRepository userRepository;
+    private final UserMapper userMapper;
 
     /**
      * Constructor injection of UserRepository.
      */
-    public UserService(UserRepository userRepository) {
+    public UserService(UserRepository userRepository, UserMapper userMapper) {
         this.userRepository = userRepository;
+        this.userMapper = userMapper;
     }
 
     /**
      * Save a new user in the database.
      */
     public UserResponseDTO createUser(UserCreateDTO userDto) {
-        User user = new User();
-        user.setUsername(userDto.getUsername());
-        user.setEmail(userDto.getEmail());
-
+        User user = userMapper.toEntity(userDto);
         User savedUser = userRepository.save(user);
-        return mapToResponse(savedUser);
+        return userMapper.toDTO(savedUser);
     }
 
     /**

@@ -17,8 +17,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class RouteApiApplication {
 
-	public static void main(String[] args) {
-		// Launch the Spring Boot application
-		SpringApplication.run(RouteApiApplication.class, args);
-	}
+    public static void main(String[] args) {
+        // Launch the Spring Boot application
+        SpringApplication.run(RouteApiApplication.class, args);
+    }
 }

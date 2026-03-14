@@ -12,7 +12,7 @@ import java.util.stream.Collectors;
 /**
  * Service layer for User operations.
  */
-@Service // Indica que esta clase tiene lógica de negocio
+@Service // Lógica de negocio
 public class UserService {
 
     private final UserRepository userRepository;
@@ -50,7 +50,6 @@ public class UserService {
      * Convert Entity → Response DTO
      */
     private UserResponseDTO mapToResponse(User user) {
-
         UserResponseDTO dto = new UserResponseDTO();
 
         dto.setId(user.getId());

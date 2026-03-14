@@ -25,7 +25,7 @@ public class HelloController {
      * @return status message confirming that the API is running
      */
     @GetMapping("/hello") // Define un endpoint
-    public String hello(){
+    public String hello() {
         return "Hello Route Intelligence API";
     }
 }

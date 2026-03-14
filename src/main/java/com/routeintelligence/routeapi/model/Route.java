@@ -61,7 +61,8 @@ public class Route {
     /**
      * Default constructor required by JPA.
      */
-    public Route() {}
+    public Route() {
+    }
 
     /**
      * Automatically set creation timestamp.

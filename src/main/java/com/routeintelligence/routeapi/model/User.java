@@ -50,7 +50,8 @@ public class User {
     /**
      * Default constructor required by JPA.
      */
-    public User() {}
+    public User() {
+    }
 
     /**
      * Constructor used for creating new users.

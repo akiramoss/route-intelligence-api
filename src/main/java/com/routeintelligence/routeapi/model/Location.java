@@ -52,5 +52,6 @@ public class Location {
     /**
      * Default constructor required by JPA.
      */
-    public Location() {}
+    public Location() {
+    }
 }

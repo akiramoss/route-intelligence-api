@@ -28,7 +28,7 @@ public class LocationService {
     /**
      * Create a new location inside a route.
      */
-    public Location createLocation(Long routId, Location location){
+    public Location createLocation(Long routId, Location location) {
 
         Route route = routeRepository.findById(routId).orElseThrow(() -> new RuntimeException("Route not found"));
         location.setRoute(route);
@@ -38,7 +38,7 @@ public class LocationService {
     /**
      * Retrieve all locations for a specific route.
      */
-    public List<Location> getLocationsByRoute(Long routeId){
+    public List<Location> getLocationsByRoute(Long routeId) {
         Route route = routeRepository.findById(routeId).orElseThrow(() -> new RuntimeException("Route not found"));
         return route.getLocations();
     }

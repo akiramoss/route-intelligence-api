@@ -7,6 +7,7 @@ import com.routeintelligence.routeapi.model.User;
 import com.routeintelligence.routeapi.repository.RouteRepository;
 import com.routeintelligence.routeapi.repository.UserRepository;
 import org.springframework.stereotype.Service;
+import com.routeintelligence.routeapi.exception.ResourceNotFoundException;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -31,7 +32,7 @@ public class RouteService {
     public RouteResponseDTO createRoute(Long userId, RouteCreateDTO dto) {
 
         User user = userRepository.findById(userId)
-                .orElseThrow(() -> new RuntimeException("User not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("User not found"));
 
         Route route = new Route();
         route.setName(dto.getName());

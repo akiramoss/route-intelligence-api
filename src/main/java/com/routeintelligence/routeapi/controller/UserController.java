@@ -4,6 +4,7 @@ import com.routeintelligence.routeapi.dto.UserCreateDTO;
 import com.routeintelligence.routeapi.dto.UserResponseDTO;
 import com.routeintelligence.routeapi.service.UserService;
 import org.springframework.web.bind.annotation.*;
+import jakarta.validation.Valid;
 
 import java.util.List;
 
@@ -24,7 +25,7 @@ public class UserController {
      * Create user endpoint
      */
     @PostMapping
-    public UserResponseDTO createUser(@RequestBody UserCreateDTO dto) {
+    public UserResponseDTO createUser(@Valid @RequestBody UserCreateDTO dto) {
         return userService.createUser(dto);
     }
 

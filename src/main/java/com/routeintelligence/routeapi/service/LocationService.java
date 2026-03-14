@@ -1,5 +1,6 @@
 package com.routeintelligence.routeapi.service;
 
+import com.routeintelligence.routeapi.exception.ResourceNotFoundException;
 import com.routeintelligence.routeapi.model.Location;
 import com.routeintelligence.routeapi.model.Route;
 import com.routeintelligence.routeapi.repository.LocationRepository;
@@ -28,9 +29,9 @@ public class LocationService {
     /**
      * Create a new location inside a route.
      */
-    public Location createLocation(Long routId, Location location) {
+    public Location createLocation(Long routeId, Location location) {
 
-        Route route = routeRepository.findById(routId).orElseThrow(() -> new RuntimeException("Route not found"));
+        Route route = routeRepository.findById(routeId).orElseThrow(() -> new ResourceNotFoundException("Route not found"));
         location.setRoute(route);
         return locationRepository.save(location);
     }
@@ -39,7 +40,7 @@ public class LocationService {
      * Retrieve all locations for a specific route.
      */
     public List<Location> getLocationsByRoute(Long routeId) {
-        Route route = routeRepository.findById(routeId).orElseThrow(() -> new RuntimeException("Route not found"));
+        Route route = routeRepository.findById(routeId).orElseThrow(() -> new ResourceNotFoundException("Route not found"));
         return route.getLocations();
     }
 }

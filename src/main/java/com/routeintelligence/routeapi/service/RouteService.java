@@ -12,9 +12,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import com.routeintelligence.routeapi.exception.ResourceNotFoundException;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
 /**
  * Service layer responsible for route-related business logic.
  */

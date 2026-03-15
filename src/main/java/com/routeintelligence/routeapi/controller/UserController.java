@@ -25,6 +25,7 @@ public class UserController {
      * Create user endpoint
      */
     @PostMapping
+    // Spring valida automáticamente
     public UserResponseDTO createUser(@Valid @RequestBody UserCreateDTO dto) {
         return userService.createUser(dto);
     }

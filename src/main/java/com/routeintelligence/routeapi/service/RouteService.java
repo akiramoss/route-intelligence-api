@@ -47,7 +47,7 @@ public class RouteService {
     /**
      * Retrieve all routes.
      */
-    public Page<RouteResponseDTO> getRoutes(Pageable pageable) {
+    public Page<RouteResponseDTO> getRoutes(String name, Long userId, Pageable pageable) {
         return routeRepository.findAll(pageable)
                 .map(routeMapper::toDTO);
     }
@@ -65,5 +65,24 @@ public class RouteService {
         dto.setCreatedAt(route.getCreatedAt());
 
         return dto;
+    }
+
+    public Page<RouteResponseDTO> getRoutesByUserId(String name, Long userId, Pageable pageable) {
+        Page<Route> routes;
+
+        if (name != null && userId != null) {
+            routes = routeRepository.findByNameContainingIgnoreCaseAndUserId(name, userId, pageable);
+
+        } else if (name != null) {
+            routes = routeRepository.findByNameContainingIgnoreCase(name, pageable);
+
+        } else if (userId != null) {
+            routes = routeRepository.findByUserId(userId, pageable);
+
+        } else {
+            routes = routeRepository.findAll(pageable);
+        }
+
+        return routes.map(routeMapper::toDTO);
     }
 }

@@ -35,7 +35,7 @@ public class RouteController {
      * Get all routes
      */
     @GetMapping
-    public Page<RouteResponseDTO> getRoutes(Pageable pageable) {
-        return routeService.getRoutes(pageable);
+    public Page<RouteResponseDTO> getRoutesByUserId(@RequestParam(required = false) String name, @RequestParam(required = false) Long userId, Pageable pageable) {
+        return routeService.getRoutes(name, userId, pageable);
     }
 }
